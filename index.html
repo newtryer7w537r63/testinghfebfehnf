@@ -17,23 +17,27 @@
             width: 100%;
             height: 100%;
         }
-        /* Optional: overlay a header */
-        #header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            z-index: 100;
-            padding: 5px;
-        }
     </style>
 </head>
 <body>
-    <div id="header">Study History Gateway</div>
-    <iframe src="https://study-history.org/" frameborder="0"></iframe>
+    <iframe id="gameFrame" src="https://study-history.org/" frameborder="0"></iframe>
+
+    <script>
+        const iframe = document.getElementById('gameFrame');
+
+        // Auto-focus the iframe when the page loads
+        iframe.onload = () => {
+            iframe.contentWindow.focus();
+        };
+
+        // Forward keyboard events to iframe
+        window.addEventListener('keydown', (e) => {
+            iframe.contentWindow.postMessage({ type: 'keydown', key: e.key }, '*');
+        });
+
+        window.addEventListener('keyup', (e) => {
+            iframe.contentWindow.postMessage({ type: 'keyup', key: e.key }, '*');
+        });
+    </script>
 </body>
 </html>
